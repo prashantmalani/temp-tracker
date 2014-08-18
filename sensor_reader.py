@@ -11,11 +11,14 @@
 #
 # Format used for storage should be : "MM/DD/YYYY-HH:MM,TTT"
 # Where TTT stands for temperature.
+# This file assumes that the MySQL server has been set up correctly.
+# Please see the README.txt file for complete information.
 
 # Imports
 from datetime import datetime
 import random
 import os
+import dbentry
 
 # Global variable definitions
 
@@ -44,8 +47,10 @@ def main():
     to write the data to a file.
     """
     temp = get_temp();
-    cur_date = datetime.now()
-    write_to_file(temp, cur_date)
+    # If you are using mySQL, this isn't required.
+    # cur_date = datetime.now()
+    #write_to_file(temp, cur_date)
+    dbentry.write_temp_to_db(temp);
 
 if __name__ == '__main__':
     main()
