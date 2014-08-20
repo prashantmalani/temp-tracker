@@ -26,7 +26,7 @@ if (mysqli_connect_errno()) {
 
 // Do stuff
 echo "<br>";
-$result = mysqli_query($con, "select * from temptracker");
+$result = mysqli_query($con, "select * from temptracker order by ts desc");
 while ($row = mysqli_fetch_array($result)) {
     echo $row['ts'] . " " . $row['temp'];
     echo "<br>";
