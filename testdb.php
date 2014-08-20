@@ -1,4 +1,4 @@
-<?php
+<?
 /*
  * File to extract temperature data from mysql db.
  *
@@ -13,25 +13,31 @@
  *
  */
 
+$databasehost = "localhost";
+$databasename = "tempdb";
+$databaseusername ="prashant";
+$databasepassword = "hello123";
+
 // Create connection
-$con=mysqli_connect("localhost","prashant","hello123","tempdb");
+$con = mysql_connect($databasehost,$databaseusername,$databasepassword) or die(mysql_error());
+mysql_select_db($databasename) or die(mysql_error());
+mysql_query("SET CHARACTER SET utf8");
+$query = "SELECT * FROM temptracker ORDER BY ts DESC";
+$sth = mysql_query($query);
 
-// Check connection
-if (mysqli_connect_errno()) {
-	echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    exit;
-} else {
-	echo " Connection was successful";
+if (mysql_errno()) {
+    header("HTTP/1.1 500 Internal Server Error");
+    echo $query.'\n';
+    echo mysql_error();
+}
+else
+{
+    $rows = array();
+    while($r = mysql_fetch_assoc($sth)) {
+        $rows[] = $r;
+    }
+    print json_encode($rows);
 }
 
-// Do stuff
-echo "<br>";
-$result = mysqli_query($con, "select * from temptracker order by ts desc");
-while ($row = mysqli_fetch_array($result)) {
-    echo $row['ts'] . " " . $row['temp'];
-    echo "<br>";
-}
-
-// Close connection
-mysqli_close($con);
+mysql_close($con);
 ?>
