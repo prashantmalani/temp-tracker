@@ -16,10 +16,10 @@ import MySQLdb
 
 # Global constants and variables
 DEFAULT_TEMP = 63
-MYSQL_USER = "root"
-MYSQL_PASSWORD = "password"
+MYSQL_USER = "prashant"
+MYSQL_PASSWORD = "hello123"
 MYSQL_IP = "localhost"
-MYSQL_DB = "TESTDB"
+MYSQL_DB = "tempdb"
 MYSQL_TABLE = "temptracker"
 
 
