@@ -9,9 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.os.Build;
+import android.util.Log;
 
 public class MainActivity extends ActionBarActivity {
+
+	private static final String TAG = "MainActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,16 @@ public class MainActivity extends ActionBarActivity {
 					false);
 			return rootView;
 		}
+	}
+
+	/*
+	 * Just take the contents of the text box and send it to the next activity.
+	 */
+	public boolean onButton1Click(View v) {
+
+		EditText inputText = (EditText) findViewById(R.id.editText1);
+		Log.e(TAG, inputText.getText().toString());
+		return true;
 	}
 
 }

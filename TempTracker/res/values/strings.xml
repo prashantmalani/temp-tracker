@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">TempTracker</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="input_string">Enter your host name / IP :</string>
     <string name="action_settings">Settings</string>
+    <string name="button1_string">Get Info</string>
 
 </resources>
