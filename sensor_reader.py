@@ -47,10 +47,11 @@ def main():
     to write the data to a file.
     """
     temp = get_temp();
+    hum = get_temp();
     # If you are using mySQL, this isn't required.
     # cur_date = datetime.now()
     #write_to_file(temp, cur_date)
-    dbentry.write_temp_to_db(temp);
+    dbentry.write_values_to_db(temp, hum);
 
 if __name__ == '__main__':
     main()

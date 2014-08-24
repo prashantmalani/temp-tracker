@@ -23,12 +23,12 @@ MYSQL_DB = "tempdb"
 MYSQL_TABLE = "temptracker"
 
 
-def write_temp_to_db(temp):
+def write_values_to_db(temp, hum):
     """ Write contents to the mysql DB.
     """
     db = MySQLdb.connect(MYSQL_IP, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB)
     cursor = db.cursor()
-    sql = "INSERT INTO %s(temp) VALUES(%d)" % (MYSQL_TABLE, temp)
+    sql = "INSERT INTO %s(temp, hum) VALUES(%d, %d)" % (MYSQL_TABLE, temp, hum)
     try:
         cursor.execute(sql)
         db.commit()
