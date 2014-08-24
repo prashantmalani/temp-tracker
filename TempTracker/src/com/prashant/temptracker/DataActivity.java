@@ -77,7 +77,7 @@ public class DataActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		mGraphView = new LineGraphView(this, "SensorGraph")  {
 			   @Override
 			   protected String formatLabel(double value, boolean isValueX) {
@@ -167,7 +167,8 @@ public class DataActivity extends ActionBarActivity {
 
 		// convert the response to string
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"), 8);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is,
+					"iso-8859-1"), 8);
 			sb = new StringBuilder();
 			sb.append(reader.readLine() + "\n");
 
