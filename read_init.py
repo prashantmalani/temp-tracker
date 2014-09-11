@@ -81,7 +81,7 @@ obs_checksum = bin_array_to_dec(final_array[32:])
 
 calc_checksum = hum_int + hum_dec + temp_int + temp_dec
 
-if calc_checksum == obs_checksum:
+if calc_checksum != obs_checksum:
     print "CHECKSUM ERROR"
 else:
     print "Humidity is " + str(hum_int)
