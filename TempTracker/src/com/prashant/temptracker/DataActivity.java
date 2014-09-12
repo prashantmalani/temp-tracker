@@ -25,6 +25,7 @@ import com.jjoe64.graphview.LineGraphView;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.AsyncTask;
@@ -37,6 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.Build;
 
 public class DataActivity extends ActionBarActivity {
@@ -47,6 +49,8 @@ public class DataActivity extends ActionBarActivity {
 
 	// List used to store the temperature data
 	private int[] mTempData;
+
+	private boolean mIsDataValid = false;
 
 	private LineGraphView mGraphView;
 
@@ -70,7 +74,12 @@ public class DataActivity extends ActionBarActivity {
 		}
 
 		protected void onPostExecute(Void param) {
-			drawGraph(mTempData);
+			if (mIsDataValid) {
+				drawGraph(mTempData);
+			} else {
+				Context context = getApplicationContext();
+				Toast.makeText(context, "Invalid URL entered!", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
@@ -86,6 +95,9 @@ public class DataActivity extends ActionBarActivity {
 			   }
 		};
 
+		mGraphView.getGraphViewStyle().setNumHorizontalLabels(NUM_X_LABELS);
+		// Both temperature and pressure shouldn't vary beyond 10 and 90
+		mGraphView.setManualYAxisBounds(80, 10);
 		setContentView(R.layout.activity_data);
 
 		if (savedInstanceState == null) {
@@ -149,6 +161,7 @@ public class DataActivity extends ActionBarActivity {
 		String result = null;
 		StringBuilder sb;
 		InputStream is;
+		mIsDataValid = false;
 
 		// Connect to the web server and get the raw data
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -180,6 +193,7 @@ public class DataActivity extends ActionBarActivity {
 			result = sb.toString();
 		} catch (Exception e) {
 			Log.e(TAG, "Error converting result:" + e.toString());
+			return;
 		}
 
 		// Extract the column data
@@ -197,9 +211,14 @@ public class DataActivity extends ActionBarActivity {
 			}
 		} catch (JSONException e) {
 			Log.e(TAG, "NO JSON DATA FOUND");
+			return;
 		} catch (ParseException e) {
 			e.printStackTrace();
+			return;
 		}
+
+		// If we have reached here, then the data is valid
+		mIsDataValid = true;
 	}
 	
 	/*
@@ -227,7 +246,6 @@ public class DataActivity extends ActionBarActivity {
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graphLayout);
 		layout.removeAllViews();
-		mGraphView.getGraphViewStyle().setNumHorizontalLabels(NUM_X_LABELS);
 		layout.addView(mGraphView);
 		layout.invalidate();				
 	}
