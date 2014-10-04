@@ -7,6 +7,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -48,6 +49,7 @@ public class DataActivity extends ActionBarActivity {
 
 	private static final String TAG = "DataActivity";
 	private static final int NUM_X_LABELS = 4;
+	private static final long MS_PER_SECOND = 1000;
 	private String mUrlString;
 
 	/*
@@ -109,8 +111,14 @@ public class DataActivity extends ActionBarActivity {
 			   protected String formatLabel(double value, boolean isValueX) {
 			      // add a custom format labeler so that we print integers labels
 				   if (isValueX) {
-					   SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
-					   return sdf.format(new Date((long)value));
+					   SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+					   sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+
+					   /*
+					    * MySQL stores epoch time in seconds, but for some reason java uses
+					    * milliseonds, therefore we need to multiple the value received.
+					    */
+					   return sdf.format(new Date((long)value * MS_PER_SECOND));
 				   } else {
 					   return ""+((int) value);
 				   }
