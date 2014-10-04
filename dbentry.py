@@ -28,7 +28,7 @@ def write_values_to_db(temp, hum):
     """
     db = MySQLdb.connect(MYSQL_IP, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB)
     cursor = db.cursor()
-    sql = "INSERT INTO %s(temp, hum) VALUES(%d, %d)" % (MYSQL_TABLE, temp, hum)
+    sql = "INSERT INTO %s(timestamp, temp, hum) VALUES(UNIX_TIMESTAMP(), %d, %d)" % (MYSQL_TABLE, temp, hum)
     try:
         cursor.execute(sql)
         db.commit()

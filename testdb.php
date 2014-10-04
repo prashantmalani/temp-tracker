@@ -22,7 +22,8 @@ $databasepassword = "hello123";
 $con = mysql_connect($databasehost,$databaseusername,$databasepassword) or die(mysql_error());
 mysql_select_db($databasename) or die(mysql_error());
 mysql_query("SET CHARACTER SET utf8");
-$query = "SELECT * FROM temptracker ORDER BY ts DESC";
+// Limit last 60 entries
+$query = "SELECT * FROM temptracker ORDER BY timestamp DESC LIMIT 60";
 $sth = mysql_query($query);
 
 if (mysql_errno()) {

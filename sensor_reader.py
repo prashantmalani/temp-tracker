@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #
 # Script to read temperature and humidity data and store
 # it in a file  (along with time information)
@@ -16,9 +15,11 @@
 
 # Imports
 from datetime import datetime
-import random
-import os
 import dbentry
+import os
+import time
+import random
+import read_init as sensor
 
 # Global variable definitions
 
@@ -46,12 +47,16 @@ def main():
     other sensor data, and then call function to write
     to write the data to a file.
     """
-    temp = get_temp();
-    hum = get_temp();
-    # If you are using mySQL, this isn't required.
-    # cur_date = datetime.now()
-    #write_to_file(temp, cur_date)
-    dbentry.write_values_to_db(temp, hum);
+
+    # Try calling 5 times, with a 2 second gap, if a valid value
+    # isn't returned
+    for i in range(0,5):
+        temp, hum = sensor.get_sensor_val();
+        if temp is not -1 and hum is not -1:
+            dbentry.write_values_to_db(temp, hum);
+            break
+        else:
+            time.sleep(2)
 
 if __name__ == '__main__':
     main()
