@@ -2,6 +2,9 @@ temp-tracker
 ============
 
 The aim is to use a Raspberry Pi to keep a log of room temperature, and read that information using an Android App.
+The DHT11 sensor is used in this case, and is connected to the GPIO pins available on the Raspberry Pi Model B board.
+
+<Insert pin connections here>
 
 
 Updates:
